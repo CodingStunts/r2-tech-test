@@ -1,5 +1,17 @@
-exports.fetchRecipes = (req, res, next) => {};
+const fs = require("fs");
 
-exports.fetchRecipeByID = (req, res, next) => {};
+exports.fetchRecipes = (query, callback) => {
+  fs.readFile(`data/data.json`, "utf-8", (err, recipesArray) => {
+    if (err) {
+      console.log(err);
+    } else {
+      const recipes = JSON.parse(recipesArray);
 
-exports.addRecipe = (req, res, next) => {};
+      callback(null, recipes);
+    }
+  });
+};
+
+exports.fetchRecipeByID = (id) => {};
+
+exports.addRecipe = (recipeBody) => {};

@@ -5,14 +5,30 @@ const request = supertest(server);
 
 test("/api", async () => {
   const { body } = await request.get("/api").expect(200);
-  expect(body.message).toBe("ok");
+  expect(body.message).toBe("Server is online.");
 });
 
-describe("getCommentsByReview() GET /api/reviews/:review_id/comments", () => {
-  test("GET /api/recipes", async () => {
+describe("getRecipes() GET /api/recipes", () => {
+  test("getRecipes returns an array of all recipes.", async () => {
     const { body } = await request.get("/api/recipes").expect(200);
-    expect(Array.isArray(body)).toBe(true);
-    expect(body[0]).toEqual(
+    expect(Array.isArray(body.recipes)).toBe(true);
+    expect(body.recipes.length).toBe(100);
+    expect(body.recipes[0]).toEqual(
+      expect.objectContaining({
+        id: expect.any(String),
+        imageUrl: expect.any(String),
+        instructions: expect.any(String),
+        ingredients: expect.any(Array),
+      })
+    );
+  });
+  test("getRecipes returns an array of all recipes, based on query criteria.", async () => {
+    const { body } = await request
+      .get("/api/recipes?exclude_ingredients=apples")
+      .expect(200);
+    expect(Array.isArray(body.recipes)).toBe(true);
+    expect(body.recipes.length).toBe(100);
+    expect(body.recipes[0]).toEqual(
       expect.objectContaining({
         id: expect.any(String),
         imageUrl: expect.any(String),
@@ -23,7 +39,7 @@ describe("getCommentsByReview() GET /api/reviews/:review_id/comments", () => {
   });
 });
 
-describe("getCommentsByReview() GET /api/reviews/:review_id/comments", () => {
+describe("getRecipeByID() GET /api/recipes/:id", () => {
   test("GET /api/recipes/:id", async () => {
     const { body } = await request.get("/api/recipes/1").expect(200);
     expect(typeof body).toBe("object");
@@ -41,9 +57,9 @@ describe("getCommentsByReview() GET /api/reviews/:review_id/comments", () => {
   });
 });
 
-describe("getCommentsByReview() GET /api/reviews/:review_id/comments", () => {
+describe("postRecipe() POST /api/recipes", () => {
   test("POST /api/", async () => {
     const { body } = await request.post("/api/recipes").expect(201);
-    expect(body.message).toBe("ok");
+    expect(body).toBe("*new recipe object*");
   });
 });

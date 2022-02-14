@@ -13,12 +13,6 @@ exports.getRecipes = (req, res, next) => {
       res.status(200).send({ recipes });
     }
   });
-  /*     .then((recipes) => {
-      res.status(200).send({ recipes });
-    }) 
-      .catch((error) => {
-      next(error);
-    }); */
 };
 
 exports.getRecipeByID = (req, res, next) => {
@@ -30,12 +24,6 @@ exports.getRecipeByID = (req, res, next) => {
       res.status(200).send({ recipe });
     }
   });
-  /*     .then((recipe) => {
-      res.status(200).send({ recipe });
-    })
-    .catch((error) => {
-      next(error);
-    }); */
 };
 
 exports.postRecipe = (req, res, next) => {

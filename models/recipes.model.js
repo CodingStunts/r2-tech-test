@@ -10,12 +10,10 @@ exports.fetchRecipes = (query, callback) => {
         callback(null, recipes);
       } else {
         const filteredRecipes = recipes.filter((recipe) =>
-          recipe.ingredients.some(
-            (ingredient) => ingredient.name === query.exclude_ingredients
+          recipe.ingredients.every(
+            (ingredient) => ingredient.name !== query.exclude_ingredients
           )
         );
-
-        console.log(filteredRecipes.length);
         callback(null, filteredRecipes);
       }
     }
@@ -36,4 +34,13 @@ exports.fetchRecipeByID = (id, callback) => {
   });
 };
 
-exports.addRecipe = (recipeBody) => {};
+//Removed from live code as was rewriting the entire data.json with "uft-8". Didn't complete anyway.
+/* exports.addRecipe = (recipeBody, callback) => {
+  fs.writeFile(`data/data.json`, "utf-8", (err, newRecipeData) => {
+    if (err) {
+      console.log(err);
+    } else {
+      const newRecipe = newRecipeData;
+    }
+  });
+}; */

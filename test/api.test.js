@@ -23,10 +23,11 @@ describe("getRecipes() GET /api/recipes", () => {
   });
   test("getRecipes returns an array of all recipes, based on query criteria.", async () => {
     const { body } = await request
-      .get("/api/recipes?exclude_ingredients=apples")
+      .get("/api/recipes?exclude_ingredients=strawberries")
       .expect(200);
     expect(Array.isArray(body.recipes)).toBe(true);
-    /*     expect(body.recipes.length).toBe(100);
+    expect(body.recipes.length).toBe(82);
+    expect(body.recipes[0].ingredients).not.toContain({ name: "strawberries" });
     expect(body.recipes[0]).toEqual(
       expect.objectContaining({
         id: expect.any(String),
@@ -34,12 +35,12 @@ describe("getRecipes() GET /api/recipes", () => {
         instructions: expect.any(String),
         ingredients: expect.any(Array),
       })
-    ); */
+    );
   });
 });
 
 describe("getRecipeByID() GET /api/recipes/:id", () => {
-  test("GET /api/recipes/:id", async () => {
+  test("getRecipeByID returns all details of the recipe with that ID.", async () => {
     const { body } = await request.get("/api/recipes/1").expect(200);
     expect(typeof body.recipe).toBe("object");
     expect(body.recipe[0]).toEqual({
@@ -54,7 +55,7 @@ describe("getRecipeByID() GET /api/recipes/:id", () => {
       ],
     });
   });
-  test("GET /api/recipes/:id", async () => {
+  test("getRecipeByID returns all details of the recipe with that ID. Second confirmation.", async () => {
     const { body } = await request.get("/api/recipes/71").expect(200);
     expect(typeof body).toBe("object");
     expect(body.recipe[0]).toEqual({
@@ -70,10 +71,11 @@ describe("getRecipeByID() GET /api/recipes/:id", () => {
     });
   });
 });
-
-describe("postRecipe() POST /api/recipes", () => {
-  test("POST /api/", async () => {
+//Ran out of time to finish post
+/* describe("postRecipe() POST /api/recipes", () => {
+  test("POST /api/recipes", async () => {
     const { body } = await request.post("/api/recipes").expect(201);
-    expect(body).toBe("*new recipe object*");
+    expect(body).toBe("*new recipe id*");
   });
 });
+ */

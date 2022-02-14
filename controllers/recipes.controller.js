@@ -23,11 +23,11 @@ exports.getRecipes = (req, res, next) => {
 
 exports.getRecipeByID = (req, res, next) => {
   const { id } = req.params;
-  fetchRecipeByID(id, (err, recipesArray) => {
+  fetchRecipeByID(id, (err, recipe) => {
     if (err) {
       console.log(err);
     } else {
-      res.status(200).send({});
+      res.status(200).send({ recipe });
     }
   });
   /*     .then((recipe) => {
